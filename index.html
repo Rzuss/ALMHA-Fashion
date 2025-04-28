@@ -6,21 +6,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ALMHA - בית של אופנה</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
   <script>
-    async function loadGallery() {
-      const galleryDiv = document.getElementById('gallery');
+    uploadcare.start({
+      publicKey: 'ba89956c99f367faa068',
+      locale: 'he'
+    });
+
+    function isAdmin() {
+      return new URLSearchParams(window.location.search).get('admin') === 'true';
+    }
+
+    function handleUpload() {
+      const dialog = uploadcare.openDialog(null, {});
+      dialog.done(function(file) {
+        file.done(function(fileInfo) {
+          const img = document.createElement('img');
+          img.src = fileInfo.cdnUrl;
+          img.alt = "Uploaded Image";
+          document.getElementById('gallery').appendChild(img);
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (isAdmin()) {
+        const uploadButton = document.createElement('button');
+        uploadButton.innerText = "העלה תמונה חדשה";
+        uploadButton.style.marginBottom = "2rem";
+        uploadButton.style.padding = "0.8rem 1.5rem";
+        uploadButton.style.fontSize = "1.2rem";
+        uploadButton.style.color = "#fff";
+        uploadButton.style.backgroundColor = "#8b3e6d";
+        uploadButton.style.border = "none";
+        uploadButton.style.borderRadius = "1.5rem";
+        uploadButton.style.cursor = "pointer";
+        uploadButton.onclick = handleUpload;
+        document.body.insertBefore(uploadButton, document.getElementById('gallery'));
+      }
+
+      // טעינת התמונות הבסיסיות
       const images = [
         'uploads/9b719649-afaf-444a-8e57-bcfe9b7a038b.jpg',
         'uploads/dbceaec4-58dc-4c08-bf00-9fde392cd00f.jpg'
       ];
+      const galleryDiv = document.getElementById('gallery');
       images.forEach(src => {
         const img = document.createElement('img');
         img.src = src;
         img.alt = "בגד";
         galleryDiv.appendChild(img);
       });
-    }
-    document.addEventListener('DOMContentLoaded', loadGallery);
+    });
   </script>
   <style>
     body {
