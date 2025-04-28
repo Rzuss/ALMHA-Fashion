@@ -3,15 +3,13 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ALMHA - בית של אופנה</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
   <script>
-    uploadcare.start({
-      publicKey: 'ba89956c99f367faa068',
-      locale: 'he'
-    });
+    uploadcare.start({ publicKey: 'ba89956c99f367faa068', locale: 'he' });
 
     function isAdmin() {
       return new URLSearchParams(window.location.search).get('admin') === 'true';
@@ -24,7 +22,7 @@
           const img = document.createElement('img');
           img.src = fileInfo.cdnUrl;
           img.alt = "Uploaded Image";
-          document.getElementById('gallery').appendChild(img);
+          document.getElementById('gallery').prepend(img);
         });
       });
     }
@@ -33,23 +31,12 @@
       if (isAdmin()) {
         const uploadButton = document.createElement('button');
         uploadButton.innerText = "העלה תמונה חדשה";
-        uploadButton.style.marginBottom = "2rem";
-        uploadButton.style.padding = "0.8rem 1.5rem";
-        uploadButton.style.fontSize = "1.2rem";
-        uploadButton.style.color = "#fff";
-        uploadButton.style.backgroundColor = "#8b3e6d";
-        uploadButton.style.border = "none";
-        uploadButton.style.borderRadius = "1.5rem";
-        uploadButton.style.cursor = "pointer";
+        uploadButton.className = "upload-button";
         uploadButton.onclick = handleUpload;
         document.body.insertBefore(uploadButton, document.getElementById('gallery'));
       }
 
-      // טעינת התמונות הבסיסיות
-      const images = [
-        'uploads/9b719649-afaf-444a-8e57-bcfe9b7a038b.jpg',
-        'uploads/dbceaec4-58dc-4c08-bf00-9fde392cd00f.jpg'
-      ];
+      const images = [];
       const galleryDiv = document.getElementById('gallery');
       images.forEach(src => {
         const img = document.createElement('img');
@@ -59,82 +46,16 @@
       });
     });
   </script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Assistant', sans-serif;
-      background: linear-gradient(135deg, #fdf6f0, #f8e8ec);
-      color: #333;
-      direction: rtl;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    header {
-      margin-bottom: 3rem;
-    }
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #8b3e6d;
-      margin-bottom: 0.5rem;
-    }
-    .subtitle {
-      font-size: 1.3rem;
-      color: #5e5e5e;
-    }
-    #gallery {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    #gallery img {
-      width: 280px;
-      max-width: 90%;
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    #gallery img:hover {
-      transform: scale(1.05);
-    }
-    footer {
-      margin-top: 4rem;
-      font-size: 0.9rem;
-      color: #888;
-    }
-    .background-shape, .background-shape2 {
-      position: fixed;
-      border-radius: 50%;
-      z-index: -1;
-    }
-    .background-shape {
-      width: 400px;
-      height: 400px;
-      background: rgba(255, 192, 203, 0.1);
-      top: -100px;
-      left: -100px;
-    }
-    .background-shape2 {
-      width: 300px;
-      height: 300px;
-      background: rgba(221, 160, 221, 0.08);
-      bottom: -80px;
-      right: -80px;
-    }
-  </style>
 </head>
 <body>
-  <div class="background-shape"></div>
-  <div class="background-shape2"></div>
-
   <header>
     <h1>ALMHA - בית של אופנה</h1>
     <div class="subtitle">עיצוב קלאסי, נוכחות בלתי נשכחת</div>
   </header>
 
-  <div id="gallery"></div>
+  <img class="banner" src="images/fashion-banner.jpg" alt="Fashion Banner" />
+
+  <div id="gallery" class="gallery"></div>
 
   <footer>
     © 2025 אלמה הפקות - כל הזכויות שמורות
